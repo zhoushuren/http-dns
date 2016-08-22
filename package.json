@@ -1,0 +1,21 @@
+{
+  "name": "httpdns",
+  "version": "1.0.0",
+  "description": "httpdns服务,用http协议代替dns协议",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@ffrj.net"
+  },
+  "keywords": [
+    "httpdns"
+  ],
+  "author": "zhoujun",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^1.2.1"
+  }
+}
