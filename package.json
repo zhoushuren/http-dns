@@ -16,6 +16,11 @@
   "author": "zhoujun",
   "license": "ISC",
   "dependencies": {
-    "koa": "^1.2.1"
+    "babel-plugin-transform-async-to-generator": "^6.8.0",
+    "babel-register": "^6.11.6",
+    "co-mysql": "^1.0.0",
+    "co-redis": "^2.1.1",
+    "koa": "^2.0.0",
+    "koa-router": "^7.0.1"
   }
 }
