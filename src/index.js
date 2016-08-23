@@ -3,9 +3,9 @@
  * email :zhoujun247@gmail.com
  */
 
-const Koa = require('koa');
+import  Koa from 'koa';
 const app = new Koa();
-const router = require('./routes/index');
+import router from './routes/index';
 
 
 app

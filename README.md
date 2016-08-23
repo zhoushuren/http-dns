@@ -12,11 +12,9 @@ npm install
 * docker 安装redis
 
 ```
- docker pull redis
+docker pull redis
  
- docker run --name httpdns-redis -d redis
- 
- docker run -it --link httpdns-redis:redis --rm redis redis-cli -h redis -p 6379
+docker run -h httpDnsRedis --name dnsReids -d -p6379:6379/TCP redis
 ```
 
 * 使用的模块:
