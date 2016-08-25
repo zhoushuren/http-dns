@@ -20,7 +20,7 @@ async function getdomain( ctx, next ) {
 			ips[0].forEach(r=>{
 				newIps.push({remarks:r.remarks,ip:r.ip})
 			});
-			redisModel.setDomain(hostname,newIps)
+			co(redisModel.setDomain(hostname,newIps));
 			ctx.body = newIps;
 		}else{
 			ctx.status = 504;
@@ -29,5 +29,6 @@ async function getdomain( ctx, next ) {
 	}
 
 }
+
 
 export {getdomain}

@@ -9,16 +9,6 @@ var wrapper = require('co-redis');
 var redisCo = wrapper(redisClient);
 
 
-
-
-//export function  getdns( domain ) {
-//	return
-//	co(function* () {
-//		yield redisCo.get(domain); // logs 33
-//	});
-//}
-
-
 let redisModel = {};
 redisModel.key = 'httpdns:domain:';
 
@@ -34,6 +24,5 @@ redisModel.getDomain = function * ( host_name ) {
 	var re = yield redisCo.get(key);
 	return re;
 }
-
 
 export default redisModel;
