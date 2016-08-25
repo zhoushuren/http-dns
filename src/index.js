@@ -9,7 +9,7 @@ import HomeRouter from './routes/HomeRouter';
 import ManageRouter from './routes/ManageRouter';
 import mysql from 'mysql-co';
 import {Mysqloptions,appConfig} from './config/config';
-
+import bodyparser from 'koa-bodyparser';
 
 
 
@@ -22,6 +22,7 @@ app.use(async function mysqlconn( ctx,next ) {
 	global.db.end();
 });
 
+app.use(bodyparser());
 
 app.use(ManageRouter.routes())
 	.use(ManageRouter.allowedMethods());

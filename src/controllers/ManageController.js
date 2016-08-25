@@ -8,13 +8,20 @@ import co from 'co';
 import mysqlModel from '../models/MysqlModel';
 
 async function  add_domain( ctx,next ) {
-	await co(function *() {
-		console.log( yield global.db.query("select 1+2 as qqq") );
-		let insertId = yield global.db.query("select 1+2 as qqq")
-	});
 
+	let hostname = ctx.request.body.hostname;
+	let desc = ctx.request.body.desc;
+	let ips = ctx.request.body.ips;
+	let domainObj = await co(mysqlModel.add_domian(hostname,desc));
+	let domain_id =domainObj[0].insertId;
+	let ipObj = await co(mysqlModel.add_ip(domain_id,ips));
 
-	 ctx.body = 1111;
+	if(domain_id >0 &&  ipObj[0].insertId >0){
+		ctx.body = {result: true,msg:'添加成功'};
+	}else{
+		ctx.body = {result: false,msg:'添加失败'};
+	}
+
 }
 
 
