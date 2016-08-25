@@ -18,10 +18,10 @@ mysql.add_domian = function *( host_name,desc  ) {
 mysql.add_ip = function *( domain_id , ips ) {
 
 	let nowTime = Math.ceil(new Date().getTime() / 1000);
-	let sql = "insert into ip(domain_id,`ip`,update_time) values";
-	//let values ="("+domain_id+",inet_aton("+ip+"),"+nowTime+")";
-	ips.forEach(ip=>{
-		sql += "("+domain_id+",inet_aton('"+ip+"'),"+nowTime+"),";
+	let sql = "insert into ip(domain_id,`ip`,update_time,remarks) values";
+	
+	ips.forEach(i=>{
+		sql += "("+domain_id+",inet_aton('"+i.ip+"'),"+nowTime+",'"+i.remarks+"'),";
 	});
 	sql = sql.substring(0,sql.length-1);
 	//console.log(sql);
