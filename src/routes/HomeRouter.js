@@ -4,17 +4,13 @@
  */
 'use strict'
 import Router from 'koa-router';
-import Mysql from '../models/MysqlModel'
+import {getdomain} from '../controllers/HomeController';
 
-const router = new Router();
+const router = new Router({prefix: '/home'});
 
 router.post('/multi_dns_resolve/:client_ip',  (ctx, next) =>{
-
-
-
-	mysql.setDomain();
 	
-	ctx.body = 'hello dns';
+	return getdomain(ctx, next);
 });
 
 

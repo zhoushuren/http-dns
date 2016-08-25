@@ -20,15 +20,19 @@ var redisCo = wrapper(redisClient);
 
 
 let redisModel = {};
+redisModel.key = 'httpdns:domain:';
 
 redisModel.setDomain = function * ( host_name,ips ) {
 
-	let key = 'httpdns:domain'+ host_name
+	let key = this.key + host_name
 	yield redisCo.set(key,JSON.stringify(ips));
 
-	var re = yield redisCo.get(key);
+}
 
-	console.log(re);
+redisModel.getDomain = function * ( host_name ) {
+	let key = this.key + host_name
+	var re = yield redisCo.get(key);
+	return re;
 }
 
 

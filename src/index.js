@@ -26,5 +26,6 @@ app.use(bodyparser());
 
 app.use(ManageRouter.routes())
 	.use(ManageRouter.allowedMethods());
-
+app.use(HomeRouter.routes())
+	.use(HomeRouter.allowedMethods());
 app.listen(3000);
