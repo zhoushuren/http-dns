@@ -4,7 +4,7 @@
  */
 'use strict'
 import Router from 'koa-router';
-import {add_domain} from '../controllers/ManageController';
+import {add_domain,update_domain} from '../controllers/ManageController';
 import co from 'co';
 
 const router = new Router({prefix: '/manage'});
@@ -20,10 +20,7 @@ router.post('/add_domain',  (ctx,next)=>{
 });
 
 router.put('/update_domain', function (ctx, next) {
-
-	ctx.body = 'hello dns';
-
-
+	return update_domain(ctx,next);
 });
 
 

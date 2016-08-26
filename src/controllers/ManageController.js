@@ -24,7 +24,30 @@ async function  add_domain( ctx,next ) {
 
 }
 
+async function update_domain( ctx,next  ) {
+	let hostname = ctx.request.body.hostname;
+	let desc = ctx.request.body.desc;
+
+	if(hostname || desc){
+		let params = {hostname,desc};
+		mysqlModel.update_domain(params);
+	}
+
+
+}
+
+async function update_ip( ctx,next  ) {
+	let ip =  ctx.request.body.ip;
+	let remarks =  ctx.request.body.remarks;
+	let domain_id =  ctx.request.body.domain_id;
+	if(ip){
+		let params = {ip,remarks,domain_id};
+		mysqlModel.update_ip(params);
+	}
+}
+ 
 
 export {
-	add_domain
+	add_domain,
+	update_domain
 }
