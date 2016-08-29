@@ -30,7 +30,7 @@ mysql.add_ip = function *( domain_id , ips ) {
 }
 
 mysql.get_domain = function* ( host_name ) {
-	let sql = "select host_name,`desc`,created_time,inet_ntoa(ip) as ip,remarks,d.update_time from  domain d ";
+	let sql = "select d.id as id,host_name,`desc`,created_time,inet_ntoa(ip) as ip,remarks,d.update_time from  domain d ";
 	sql+="left join ip on d.id=ip.domain_id where d.`host_name`='"+host_name+"'";
 	let ips = yield global.db.query(sql);
 	return ips;
@@ -39,22 +39,49 @@ mysql.get_domain = function* ( host_name ) {
 mysql.update_domain = function *( params ) {
 	let sql = "update domain set ";
 	for (let param in params){
-		sql += param + '=' + params[param] + ','
+		sql += '`'+param+  '`=' + '\''+ params[param] + '\'' + ','
 	}
 	sql = sql.substr(0,sql.length -1);
-	sql += 'where host_name=' + params.hostname;
-	global.db.query(sql);
+	sql += ' where id=' + '\''+params.id+'\'';
+	let result =  yield global.db.query(sql);
+	return result[0];
 
 }
 
 mysql.update_ip = function *( params ) {
 	let sql = "update ip set ";
-	for (let param in params){
-		sql += param + '=' + params[param] + ','
-	}
-	sql = sql.substr(0,sql.length -1);
-	sql += 'where domain_id=' + params.domain_id;
-	global.db.query(sql);
+	//for (let param in params){
+	//	if(param !='id')
+	//	sql += param + '=' + '\''+params[param]+'\'' + ','
+	//}
+	sql += 'ip= inet_aton( '  + '\''+ params.ip +'\'' + '),';
+	sql += 'update_time=' +  Math.ceil(new Date().getTime() / 1000);
+	//sql = sql.substr(0,sql.length -1);
+	sql += ' where id=' + params.id;
+	console.log(sql);
+	let result = yield global.db.query(sql);
+	return result[0];
 }
 
+mysql.get_domain_list = function* (  ) {
+	let sql = "select d.id as id,ip.id as ip_id, host_name,`desc`,created_time,inet_ntoa(ip) as ip,remarks,d.update_time from  domain d ";
+	sql+="left join ip on d.id=ip.domain_id ";
+	let domains = yield global.db.query(sql);
+	return domains[0];
+}
+//获取修改的数据
+mysql.get_update_domain = function* ( id ) {
+	let sql = "select id ,host_name,`desc`,created_time,update_time from  domain ";
+	sql+=" where `id`="+id;
+	let ips = yield global.db.query(sql);
+	return ips[0][0];
+}
+
+mysql.delete_ip = function* ( id ) {
+	let sql = "delete from ip";
+	sql+=" where `id`="+id;
+	console.log(sql);
+	let ips = yield global.db.query(sql);
+	return ips[0];
+}
 export default mysql;
